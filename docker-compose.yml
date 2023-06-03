@@ -1,0 +1,14 @@
+version: '3.9'
+services:
+  elixir:
+    build: .
+    environment:
+      MIX_ENV: dev
+    volumes:
+      - ./elixir:/app
+      - ./data:/data
+    command: sh -c "cd /app && mix local.hex --force && mix deps.get && mix local.rebar --force && mix ecto.create && mix ecto.migrate && while true; do mix run --no-halt; done"
+volumes:
+  elixir:
+  data:
+
